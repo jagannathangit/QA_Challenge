@@ -25,11 +25,6 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("loginByAPI", (username, password) => {
-  Cypress.log({
-    name: "loginByAPI",
-    message: `${username} | ${password}`,
-  });
-
   cy.request({
     method: "POST",
     url: "/api/user/login",
@@ -47,4 +42,24 @@ Cypress.Commands.add("loginByAPI", (username, password) => {
   cy.get(".ngx-dropdown-toggle").click();
   cy.get(".profile-title > span").should("contain", "Jagannathan");
   cy.get(".ngx-dropdown-toggle").click();
+});
+
+Cypress.Commands.add("loginByUI", (username, password) => {
+  cy.get('[data-cy="username__input"]').clear().type(username);
+  cy.get('[data-cy="password__input"]').clear().type(password, { log: false });
+
+  cy.get('[data-cy="submit__btn"]').click();
+});
+
+Cypress.Commands.add("logoutByUI", () => {
+  cy.get(".btn.logout-button.pull-right").should("contain", "Log Out").click();
+
+  cy.get("h1[data-cy='logout__msg']").should(
+    "contain",
+    "You have successfully logged out"
+  );
+  cy.get("[data-cy='return__btn']")
+    .should("contain", "Return to Swimlane")
+    .click();
+  cy.url().should("contain", Cypress.config().baseUrl);
 });

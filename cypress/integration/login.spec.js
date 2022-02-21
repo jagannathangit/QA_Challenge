@@ -6,28 +6,12 @@ describe("Automated UI test suite around the login page.", () => {
     cy.visit("/login");
   });
   it("should be able to log in the Test Site and show  home page information", () => {
-    cy.get('[data-cy="username__input"]').clear().type(username);
-    cy.get('[data-cy="password__input"]')
-      .clear()
-      .type(password, { log: false });
-
-    cy.get('[data-cy="submit__btn"]').click();
+    cy.loginByUI(username, password);
 
     cy.url().should("include", "welcome");
     cy.get(".ngx-dropdown-toggle").click();
     cy.get(".profile-title > span").should("contain", "Jagannathan");
-    cy.get(".btn.logout-button.pull-right")
-      .should("contain", "Log Out")
-      .click();
-
-    cy.get("h1[data-cy='logout__msg']").should(
-      "contain",
-      "You have successfully logged out"
-    );
-    cy.get("[data-cy='return__btn']")
-      .should("contain", "Return to Swimlane")
-      .click();
-    cy.url().should("contain", Cypress.config().baseUrl);
+    cy.logoutByUI();
   });
   it("should not be able to log in with incorrect password", () => {
     cy.get('[data-cy="username__input"]').clear().type(username);
