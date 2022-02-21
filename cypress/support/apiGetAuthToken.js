@@ -10,9 +10,6 @@ Cypress.Commands.add("getAuthToken", () => {
       password,
     },
   }).then((response) => {
-    cy.log(response);
-    cy.log(response.body.token);
-
     const token = response.body.token;
     localStorage.setItem("jwt_token", token);
     Cypress.env("jwt_token", token);

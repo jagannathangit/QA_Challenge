@@ -24,7 +24,6 @@ describe("Automated UI test suite around retrieving a new record with AppID and 
     };
 
     const token = Cypress.env("jwt_token");
-    cy.log("token is +" + token);
     const authorization = `bearer ${token}`;
 
     const apiURL = Cypress.env("API_URL");
@@ -41,6 +40,16 @@ describe("Automated UI test suite around retrieving a new record with AppID and 
       .then((response) => {
         cy.log(response);
         expect(response.status).to.equal(200);
+        expect(response.body.applicationId).to.equal(applicationId);
+        expect(response.body.values.aFjm80LnbJf780V6p).to.equal(
+          payload.values.aFjm80LnbJf780V6p
+        );
+        expect(response.body.values.aHdR_gHQmRT8ItVTL).to.equal(
+          payload.values.aHdR_gHQmRT8ItVTL
+        );
+        expect(response.body.values.aHxOeHmCTIGd_hg1b).to.equal(
+          payload.values.aHxOeHmCTIGd_hg1b
+        );
         expect(response.body.id).to.not.be.null;
         cy.log(response.body.id);
       })

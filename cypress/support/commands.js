@@ -38,9 +38,7 @@ Cypress.Commands.add("loginByAPI", (username, password) => {
       password,
     },
   }).then((response) => {
-    cy.log(response);
-    cy.log(response.body.token);
-
+    expect(response.status).to.equal(200);
     const token = response.body.token;
     localStorage.setItem("jwt_token", token);
   });

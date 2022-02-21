@@ -12,9 +12,7 @@ describe("Automated UI test suite around the login page.", () => {
         password,
       },
     }).then((response) => {
-      cy.log(response);
-      cy.log(response.body.token);
-
+      expect(response.status).to.equal(200);
       const token = response.body.token;
       localStorage.setItem("jwt_token", token);
     });

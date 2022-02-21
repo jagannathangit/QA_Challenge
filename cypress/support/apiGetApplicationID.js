@@ -1,11 +1,10 @@
 Cypress.Commands.add("getApplicationID", () => {
   const token = Cypress.env("jwt_token");
-  cy.log("token is +" + token);
   const authorization = `bearer ${token}`;
 
   cy.request({
     method: "GET",
-    url: "https://qa-practical.qa.swimlane.io:443/api/app",
+    url: `${Cypress.env("API_URL")}`,
     headers: { authorization, "Content-Type": "application/json" },
   }).then((response) => {
     expect(response.status).to.equal(200);

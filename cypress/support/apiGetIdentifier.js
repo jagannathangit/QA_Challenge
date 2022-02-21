@@ -18,7 +18,6 @@ Cypress.Commands.add("getIdentifier", () => {
     },
   };
   const token = Cypress.env("jwt_token");
-  cy.log("token is +" + token);
   const authorization = `bearer ${token}`;
 
   const apiURL = Cypress.env("API_URL");
